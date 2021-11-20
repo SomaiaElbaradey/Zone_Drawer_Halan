@@ -1,0 +1,12 @@
+<div [ngClass]="'currentTheme' | translate" class="app-layout">
+  <app-header></app-header>
+
+  <main class="main-page">
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer></app-footer>
+
+</div>
+<p-toast></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

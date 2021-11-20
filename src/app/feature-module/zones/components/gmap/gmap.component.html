@@ -1,0 +1,44 @@
+<p-gmap #gmap [style]="{'width':'100%','height':'500px', 'margin-bottom': '1em'}" [options]="options"
+    [overlays]="overlays" (onMapClick)="handleMapClick($event)" (onOverlayClick)="handleOverlayClick($event)"
+    (onOverlayDragEnd)="handleDragEnd($event)"></p-gmap>
+
+
+<p-dialog showEffect="fade" [(visible)]="dialogVisible" header="{{ 'New Mark' | translate }}">
+    <div class="p-grid p-fluid" *ngIf="selectedPosition">
+        <div class="p-col-2"><label for="lat">{{ "Lat" | translate }}</label></div>
+        <div class="p-col-10"><input id="lat" type="text" readonly pInputText [ngModel]="selectedPosition.lat()"></div>
+
+        <div class="p-col-2"><label for="lng">{{ "Lng" | translate }}</label></div>
+        <div class="p-col-10"><input id="lng" type="text" readonly pInputText [ngModel]="selectedPosition.lng()"></div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div>
+            <button type="button" pButton label="{{ 'Add Marker' | translate }}" icon="pi pi-plus"
+                (click)="addMarker()"></button>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog showEffect="fade" [(visible)]="saveDialog" header="{{ 'Save Zone' | translate }}">
+    <div class="p-grid p-fluid">
+        <p-colorPicker [(ngModel)]="color" [inline]="true"></p-colorPicker>
+        <input type="text" [(ngModel)]="label" placeholder="{{ 'Zone Title' | translate }}" pInputText />
+    </div>
+    <ng-template pTemplate="footer">
+        <div>
+            <button type="button" pButton label="{{ 'Save Zone' | translate }}" (click)="addZone()"></button>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog showEffect="fade" [(visible)]="deleteDialog" header="{{ 'Delete Zone' | translate }}">
+    <div class="p-grid p-fluid">
+        Are you sure you want to delete this zone?
+    </div>
+    <ng-template pTemplate="footer">
+        <div>
+            <button type="button" pButton label="{{ 'Yes' | translate }}" (click)="deleteZone()"></button>
+            <button type="button" pButton label="{{ 'No' | translate }}" (click)="cancelDeletion()"></button>
+        </div>
+    </ng-template>
+</p-dialog>

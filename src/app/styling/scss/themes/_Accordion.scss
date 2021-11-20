@@ -1,0 +1,18 @@
+@import "./../mixins/flex";
+p-accordion {
+  .p-accordion {
+    p-accordiontab {
+      .p-accordion {
+        &-header {
+          &-link {
+            @include flex(
+              $direction: row-reverse,
+              $align: center,
+              $justify: space-between
+            );
+          }
+        }
+      }
+    }
+  }
+}

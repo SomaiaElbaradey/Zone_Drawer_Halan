@@ -1,0 +1,66 @@
+<nav id="zone-header" class="navbar navbar-light">
+  <section class="topBar">
+    <div class="container-fluid">
+      <div class="row row-container">
+        <div class="topBar-left">
+          <div class="main-url">
+            <ul>
+              <li>
+                <a> {{'Home' | translate}}</a>
+              </li>
+              <li>
+                <a> {{'Help and support' | translate}}</a>
+              </li>
+              <li>
+                <a>
+                  <i class="fas fa-search"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="topBar-right">
+          <div class="social-contanier">
+            <ul>
+              <li>
+                <a href="https://twitter.com/halanapp" target="_blank" class="tweetIcon"><i
+                    class="fab fa-twitter"></i></a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/Halanapp/" target="_blank" class="faceIcon"><i
+                    class="fab fa-facebook-f"></i></a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/company/halan"
+                  target="_blank" class="linkedIcon"><i class="fab fa-linkedin-in"></i></a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/halanapp/" target="_blank" class="instgIcon"><i
+                    class="fab fa-instagram"></i></a>
+              </li>
+            </ul>
+
+          </div>
+          <div class="unified-contact-number">
+            <a href="tel:16303" class="number">16303</a>
+            <img src="/assets/images/call-Icon.png" alt="instgIcon">
+          </div>
+          <div class="language-contanier">
+            <ng-container *ngIf=" currentLang==='en'">
+              <a (click)="changeCurrentLang('ar')" class=" language ">{{'AR' | translate}}</a>
+            </ng-container>
+            <ng-container *ngIf="currentLang === 'ar'">
+              <a (click)="changeCurrentLang('en')" class=" language ">{{'EN' | translate}}</a>
+            </ng-container>
+          </div>
+          <div class="login-buttons">
+            <button class="custom-button-transparent" pButton pRipple *ngIf="auth.isLoggedOut$| async"
+              routerLink="/login" label="Login" type="button" icon="pi pi-sign-in" iconPos="left"></button>
+            <button class="custom-button-transparent" pButton pRipple *ngIf="auth.isLoggedIn$| async" (click)="logout()"
+              label="&nbsp;Logout" type="button" icon="pi pi-sign-out" iconPos="left"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</nav>

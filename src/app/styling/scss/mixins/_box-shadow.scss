@@ -1,0 +1,10 @@
+@mixin box-shadow($x, $y, $blur_value, $spread, $color) {
+  -webkit-box-shadow: $x $y $blur_value $spread $color;
+  -moz-box-shadow: $x $y $blur_value $spread $color;
+  -ms-box-shadow: $x $y $blur_value $spread $color;
+  box-shadow: $x $y $blur_value $spread $color;
+}
+
+.example {
+  @include box-shadow(0px, 10px, 15px, 15px, #e5e5e5);
+}

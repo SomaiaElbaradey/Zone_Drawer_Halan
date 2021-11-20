@@ -1,0 +1,30 @@
+<div [ngClass]="'currentTheme' | translate" id="fullContent" class="main-fullcontent">
+  <div class="fullcontent-body">
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="fullContent-footer">
+    <div class="fullContent-footer-quickLinks">
+      <ul>
+        <li>
+          <a> {{ "Home" | translate }}</a>
+        </li>
+        <li>
+          <a> {{ "call us" | translate }}</a>
+        </li>
+        <li>
+          <a> {{ "Help and support" | translate }}</a>
+        </li>
+        <li>
+          <a> {{ "Privacy policy" | translate }}</a>
+        </li>
+        <li>
+          <a> {{ "Terms of use" | translate }}</a>
+        </li>
+        <li>
+          <a> {{ "common questions" | translate }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

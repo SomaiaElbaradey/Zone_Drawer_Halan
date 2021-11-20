@@ -1,0 +1,169 @@
+@import "./../mixins/flex";
+@import "./../mixins/media-query";
+@import "./../mixins/box-shadow";
+@import "./../variables/color";
+@import "./../variables/breack-point";
+.main-fullcontent {
+  .fullcontent-body {
+    .auth-body {
+      background: $dark-blue2;
+      min-height: 450px;
+
+      position: relative;
+      box-shadow: 0 0 4px rgb(0 0 0 / 14%), 0 4px 8px rgb(0 0 0 / 28%);
+      border-radius: 10px;
+      @include sm {
+        width: 100%;
+        border-radius: 0;
+        @include flex($direction: column-reverse);
+        margin: 0 auto 50px auto;
+      }
+      @include md {
+        width: 100%;
+        border-radius: 0;
+        @include flex($direction: column-reverse);
+        margin: 0 auto 50px auto;
+      }
+      @include lg {
+        width: 90%;
+        @include flex($direction: row);
+        margin: 100px auto;
+      }
+      @include xl {
+        width: 70%;
+        @include flex($direction: row);
+        margin: 100px auto;
+      }
+      &-router {
+        @include sm {
+          position: relative;
+          border-radius: 0px;
+        }
+        @include md {
+          border-radius: 0px;
+          position: relative;
+        }
+        @include lg {
+          position: absolute;
+          height: 130%;
+          width: 45%;
+          right: 2%;
+          top: -15%;
+        }
+        @include xl {
+          position: absolute;
+          height: 130%;
+          width: 45%;
+          right: 2%;
+          top: -15%;
+        }
+        @include xlg {
+          position: absolute;
+          height: 130%;
+          width: 36%;
+          right: 3%;
+          top: -15%;
+        }
+        background-color: $white;
+        box-shadow: 0 0 4px rgb(0 0 0 / 14%), 0 4px 8px rgb(0 0 0 / 28%);
+        overflow: hidden;
+        padding: 15px 30px 30px;
+        transition: all 0.5s;
+        overflow-y: auto;
+        .login-page {
+          padding: 0.5rem;
+          .login-header {
+            margin-bottom: 2.5rem;
+            @include flex($direction: row, $align: center, $justify: center);
+          }
+          form {
+            .input-form {
+              margin: 0 0 2rem 0;
+            }
+            .form-button {
+              @include flex($direction: row, $align: center, $justify: center);
+            }
+          }
+        }
+      }
+      &-zone {
+        flex: 1;
+        .zone-container {
+          @include sm {
+            width: 100%;
+          }
+          @include md {
+            width: 100%;
+          }
+          @include lg {
+            width: 45%;
+          }
+          @include xl {
+            width: 52%;
+          }
+          @include xlg {
+            width: 60%;
+          }
+          @include flex($direction: column, $justify: center);
+
+          height: 100%;
+          gap: 1rem;
+          color: $white;
+          padding: 1rem;
+          .zone-header {
+            @include sm {
+              text-align: left;
+            }
+            @include md {
+              text-align: left;
+            }
+            @include lg {
+              text-align: right;
+            }
+            @include xl {
+              text-align: right;
+            }
+          }
+          .zone-body {
+            @include sm {
+              text-align: left;
+            }
+            @include md {
+              text-align: left;
+            }
+            @include lg {
+              text-align: right;
+            }
+            @include xl {
+              text-align: right;
+            }
+          }
+          .zone-button {
+            @include flex($direction: row, $align: center, $justify: center);
+          }
+        }
+      }
+    }
+  }
+  .fullContent-footer-quickLinks {
+    ul {
+      @include flex(
+        $direction: row,
+        $align: center,
+        $justify: center,
+        $wrap: wrap
+      );
+
+      li {
+        &:not(:last-child) {
+          border-right: 1px solid #333;
+          padding-right: 10px;
+        }
+
+        &:not(:first-child) {
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+}

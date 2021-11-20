@@ -1,0 +1,41 @@
+@import "./../mixins/flex";
+@import "./../variables/color";
+.app-layout {
+  &.rtl {
+    direction: rtl;
+  }
+  &.ltr {
+    direction: ltr;
+  }
+  .main-page {
+    padding-top: 160px;
+    min-height: calc(100vh - 400px);
+  }
+  .main-padding {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  .page-container {
+    padding: 2rem 3rem;
+  }
+  .page-header {
+    margin-bottom: 1rem;
+
+    h4 {
+      padding-bottom: 1.3rem;
+      border-bottom: 1px solid #333;
+    }
+  }
+
+  .page-button {
+    @include flex($direction: row, $align: center, $justify: flex-end);
+    margin-top: 2rem;
+  }
+}
+
+.custom-card {
+  padding: 1rem;
+  border: 1px solid $gray1;
+  background-color: $gray2;
+  @include flex($direction: row, $align: center, $justify: space-between);
+}

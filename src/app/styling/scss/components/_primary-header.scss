@@ -1,0 +1,228 @@
+@import "./../mixins/flex";
+@import "./../mixins/box-shadow";
+@import "./../variables/color";
+body {
+  font-size: 16px;
+}
+@media (min-width: 1400px) {
+  body {
+    font-size: 14px;
+  }
+}
+.app-layout {
+  nav {
+    border-bottom: 1px solid $gray1;
+    margin-bottom: 280px;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+    flex-direction: column;
+    padding: 0;
+    .topBar {
+      background-color: $dark-blue2;
+      color: $white;
+      width: 100%;
+      .row-container {
+        align-items: center;
+        justify-content: space-between;
+        & > * {
+          flex: 1;
+        }
+
+        .topBar-left {
+          ul {
+            @include flex(
+              $direction: row,
+              $align: center,
+              $justify: flex-start
+            );
+            padding: 1rem 0;
+            li {
+              padding: 0 1rem 0 1rem;
+              &:not(:last-child) {
+                border-right: 1px solid $white;
+              }
+              &:first-child {
+                padding: 0 1rem 0 0;
+              }
+            }
+          }
+        }
+
+        .topBar-center {
+          align-self: stretch;
+          @include flex($direction: row, $align: center, $justify: center);
+          .version-contanier {
+            @include flex($direction: row, $align: center, $justify: center);
+            background-color: $sky-blue;
+            height: 100%;
+            width: 140px;
+          }
+        }
+
+        .topBar-right {
+          @include flex($direction: row, $align: center, $justify: flex-end);
+          gap: 1rem;
+          .social-contanier {
+            ul {
+              @include flex($direction: row, $align: center);
+              gap: 1rem;
+              li {
+                a {
+                  i {
+                    color: $white;
+                  }
+                }
+              }
+            }
+          }
+          .unified-contact-number {
+            @include flex($direction: row, $align: center);
+            gap: 0.4rem;
+            .number {
+              color: $white;
+            }
+            img {
+              width: 25px;
+              margin-top: -3px;
+            }
+          }
+          .language-contanier {
+            .language {
+              color: $white;
+            }
+          }
+
+          > div {
+            &:not(:last-child) {
+              border-right: 1px solid $white;
+              padding-right: 15px;
+            }
+          }
+        }
+      }
+    }
+
+    .bottomBar {
+      width: 100%;
+      background-color: $white;
+      &-container {
+        @include flex(
+          $direction: row,
+          $align: center,
+          $justify: space-between,
+          $wrap: wrap
+        );
+        padding: 0.5rem 0 0.5rem 0;
+
+        .brand-logo {
+          img {
+            height: 70px;
+          }
+        }
+
+        .custom-navbar {
+          @include flex($direction: row, $align: center, $wrap: wrap);
+          gap: 20px;
+          .custom-nav-dropdown {
+            position: relative;
+            &.nav-link {
+              color: $dark-gray2;
+              a {
+                color: $dark-gray2;
+              }
+            }
+
+            &::before {
+              font-family: "Font Awesome 5 Free";
+              font-weight: 900;
+              content: "\f0dd";
+              position: absolute;
+              right: 0;
+              top: 7px;
+            }
+            &.open {
+              &::before {
+                transform: rotate(180deg);
+                top: unset;
+                bottom: 7px;
+              }
+            }
+          }
+          .nav-item {
+            .nav-link {
+              color: $dark-gray2;
+              &:hover {
+                color: $dark-blue;
+              }
+            }
+            &.active {
+              .nav-link {
+                color: $dark-blue;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.fixed-header {
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      @include box-shadow(0px, 0px, 5px, 0.2px, #1f1818);
+    }
+  }
+  &.rtl {
+    nav {
+      .topBar {
+        .row-container {
+          .topBar-left {
+            ul {
+              li {
+                &:not(:last-child) {
+                  border-left: 1px solid $white;
+                  border-right: none;
+                }
+                &:first-child {
+                  padding: 0 0 0 1rem;
+                }
+              }
+            }
+          }
+          .topBar-right {
+            > div {
+              &:not(:last-child) {
+                border-left: 1px solid $white;
+                padding-left: 15px;
+                border-right: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .btn {
+    font-size: 1em;
+    color: $zone-blue;
+    border: 1px solid $zone-blue;
+    border-radius: 0%;
+  }
+
+  .btn:hover {
+    color: white;
+    background-color: $zone-blue;
+  }
+
+  .services-container {
+    ul {
+      @include flex($direction: row, $align: center);
+      gap: 1rem;
+      li {
+        color: $zone-blue;
+      }
+    }
+  }
+}

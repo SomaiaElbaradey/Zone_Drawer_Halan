@@ -1,0 +1,79 @@
+<div class="auth-body">
+  <div class="auth-body-zone">
+    <div class="zone-container">
+      <div class="zone-header text-center">
+        <h5>
+           {{ "Your Everyday Needs in one app!" | translate }}
+        </h5>
+      </div>
+      <div class="zone-body">
+        <p>
+          {{ "" | translate }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="auth-body-router">
+
+    <div class="login-page">
+      <div class="login-header">
+        <h4>
+          {{ "Login" | translate }}
+        </h4>
+      </div>
+
+      <form [formGroup]="form">
+
+        <div class="input-form p-field  custom-text-input">
+          <span class="p-float-label">
+            <input pInputText type="text" name="username" style="width: 100%;" id="username" formControlName="username" />
+            <label for="username">{{ "Username" | translate }}</label>
+          </span>
+          <div class="error-message-container" *ngIf="userNameInput?.invalid &&
+          ((userNameInput?.dirty || userNameInput?.touched))  ||
+          ((userNameInput?.untouched) && isFormSubmitted)">
+         <ng-container *ngIf="userNameInput?.errors?.required">
+           <p-message severity="error" [text]="'This field is required.' | translate"></p-message>
+         </ng-container>
+         <ng-container *ngIf="userNameInput?.errors?.minlength">
+           <p-message severity="error" [text]="'UserName must be more than 3 characters' | translate"></p-message>
+         </ng-container>
+       </div>
+        </div>
+        <div class="input-form p-field  custom-password-input ">
+          <span class="p-float-label">
+            <p-password [feedback]=false [toggleMask]="true" inputId="password" id="password" formControlName="password"></p-password>
+            <label for="password">{{ "Password" | translate }}</label>
+          </span>
+          <div class="error-message-container" *ngIf="passwordInput?.invalid &&
+          ((passwordInput?.dirty || passwordInput?.touched))  ||
+          ((passwordInput?.untouched) && isFormSubmitted)">
+            <ng-container *ngIf="passwordInput?.errors?.required">
+              <p-message severity="error" [text]="'This field is required.' | translate"></p-message>
+            </ng-container>
+          </div>
+        </div>
+        <div class="input-form col-lg-12 custom-recaptcha2-input">
+          <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha">
+          </ngx-recaptcha2>
+          <div class="error-message-container" *ngIf="recaptchaInput?.invalid &&
+          ((recaptchaInput?.dirty || recaptchaInput?.touched))  ||
+          ((recaptchaInput?.untouched) && isFormSubmitted)">
+            <ng-container *ngIf="recaptchaInput?.errors?.required">
+              <p-message severity="error" [text]="'This field is required.' | translate"></p-message>
+            </ng-container>
+          </div>
+        </div>
+        <div class="form-button mt-3">
+          <button class="custom-button-darkBule" pRipple pButton type="button" [label]="'Login' | translate"
+            (click)="submit()"></button>
+        </div>
+        <br>
+        <div *ngIf="invalidLogin" class="text-danger">
+          {{ "Invalid Login Info" | translate }}
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
