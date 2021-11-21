@@ -15,17 +15,20 @@ export class GmapComponent implements OnInit {
   dialogVisible!: boolean;
   saveDialog!: boolean;
   deleteDialog!: boolean;
+  operationDialog!:boolean;
   selectedPosition: any;
   infoWindow: any;
   draggable!: boolean;
   firstLang!: string;
   firstLat!: string;
-  color: any = "#FF0000";
+  color!: any;
   label!: string;
-  deleteId!: string;
+  opsId!: string;
 
   @Output() onAddZone: EventEmitter<any> = new EventEmitter();
   @Output() onDeleteZone: EventEmitter<any> = new EventEmitter();
+  @Output() onUpdateZone: EventEmitter<any> = new EventEmitter();
+  @Output() onGetZone: EventEmitter<any> = new EventEmitter();
   @Input() zones!: any[];
 
   constructor(
@@ -67,7 +70,8 @@ export class GmapComponent implements OnInit {
 
     this.zones.forEach(element => {
       zoneDraw = [...zoneDraw,
-      new google.maps.Polygon({ id: element.id, title: element.label, path: element.points, fillColor: element.color, strokeColor: '#0000' })
+      new google.maps.Polygon({ id: element.id, title: element.label, path: element.points, fillColor: element.color,
+         strokeColor: '#0000', editable: true, points: element.points })
       ]
     });
 
@@ -80,12 +84,21 @@ export class GmapComponent implements OnInit {
   }
 
   handleOverlayClick(event: any) {
+    this.points = [];
     this.selectedPosition = event.originalEvent.latLng;
     if (this.firstLang == this.selectedPosition.lng() && this.firstLat == this.selectedPosition.lat() && this.overlays.length > 0) {
       this.saveDialog = true;
     } else {
-      this.deleteDialog = true;      
-      this.deleteId = event.overlay.id;
+      this.operationDialog = true;
+      this.opsId = event.overlay.id;      
+
+      event.overlay.getPath().td.forEach((element: any) => {
+        this.points = [
+          ...this.points, {lat: element.lat(), lng:element.lng() }
+        ]
+      });
+            
+      this.onGetZone.emit({ id: this.opsId })
     }
   }
 
@@ -117,16 +130,37 @@ export class GmapComponent implements OnInit {
     this.dialogVisible = false;
   }
 
-  handleDragEnd(event: any) {
+  handleDragEnd(event: any) {    
   }
 
   deleteZone() {
     this.deleteDialog = false;
-    this.onDeleteZone.emit({ id: this.deleteId })
+    this.onDeleteZone.emit({ id: this.opsId })
   }
 
   cancelDeletion() {
     this.deleteDialog = false;
+  }
+
+  mouseOver(e:any){
+    console.log(e);
+  }
+
+  updateZone(){
+    this.operationDialog = false;
+    this.onUpdateZone.emit({ id: this.opsId, color: this.color, label: this.label, points: this.points })
+  }
+
+  cancelOperation(){
+    this.operationDialog = false;
+  }
+
+  onDeleteDialog(){
+    this.firstLang = '';
+    this.firstLat = '';
+    this.points = [];
+    this.deleteDialog = true;      
+    this.operationDialog = false;
   }
 
 }

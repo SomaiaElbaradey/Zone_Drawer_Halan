@@ -16,6 +16,11 @@ export class ZonesServiceProxies {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://zones-backend-halan.herokuapp.com";
     }
 
+    put(id:any, model: ZoneVm): Observable<any> {
+        return this.http
+          .put(`${this.baseUrl}/zones/${id}`, model )
+      }
+
     postZone(model: ZoneVm): Observable<any> {
         let url_ = this.baseUrl + "/zones";
         url_ = url_.replace(/[?&]$/, "");
@@ -47,9 +52,38 @@ export class ZonesServiceProxies {
         }));
     }
 
-
     getAll(): Observable<any> {
         let url_ = this.baseUrl + "/zones";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_: any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<any>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<any>><any>_observableThrow(response_);
+        }));
+    }
+
+    get(id: string | undefined): Observable<any> {
+        let url_ = this.baseUrl + "/zones/";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: any = {
@@ -119,14 +153,14 @@ export class ZonesServiceProxies {
             url_ += encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_ : any = {
+        let options_: any = {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
                 "Accept": "application/json"
             })
         };
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_: any) => {
             return this.processDelete(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
@@ -138,22 +172,22 @@ export class ZonesServiceProxies {
             } else
                 return <Observable<Response>><any>_observableThrow(response_);
         }));
-        
+
     }
 
     protected processDelete(response: HttpResponseBase): Observable<Response> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+                (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); } }
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            return _observableOf(result200);
+                let result200: any = null;
+                result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                return _observableOf(result200);
             }));
-        } 
+        }
         return _observableOf<Response>(<any>null);
     }
 }

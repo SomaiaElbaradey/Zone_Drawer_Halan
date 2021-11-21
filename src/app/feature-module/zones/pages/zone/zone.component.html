@@ -4,6 +4,7 @@
             {{ "Hi!" | translate }}
         </h6>
     </div>
-    <app-gmap *ngIf="zones" (onAddZone)="addZone($event)" (onDeleteZone)="deleteZone($event)" [zones]="zones">
+    <app-gmap *ngIf="zones" (onGetZone)="getZone($event)" (onAddZone)="addZone($event)"
+        (onDeleteZone)="deleteZone($event)" (onUpdateZone)="updateZone($event)" [zones]="zones">
     </app-gmap>
 </div>

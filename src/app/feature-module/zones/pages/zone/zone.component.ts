@@ -46,7 +46,12 @@ export class ZoneComponent implements OnInit {
       )
     ).subscribe(
       res => {
-        this._messageService.add({ severity: 'success', summary: 'Add Zone Message', detail: 'Added Successfully' });
+        if (res.status == 200)
+          this._messageService.add({ severity: 'success', summary: 'Add Zone Message', detail: "added successfully" });
+        // if (typeof (JSON.parse(res)!.message) == 'string')
+        //   this._messageService.add({ severity: 'info', summary: 'Add Zone Message', detail: JSON.parse(res)?.message });
+        else
+          this._messageService.add({ severity: 'error', summary: 'Error Message', detail: "Error" });
         this.getZones();
       },
       err => {
@@ -101,5 +106,62 @@ export class ZoneComponent implements OnInit {
       },
       err => console.log(err)
     )
+  }
+
+
+  
+  updateZone(event: any) {
+    let data = new ZoneVm({
+      color: event?.color,
+      label: event?.label,
+      points: event?.points
+    })
+    this._ZonesServiceProxies.put(event.id, data).pipe(
+      retryWhen(
+        errors =>
+          errors.pipe(
+            delay(1000),
+            tap(errorStatus => {
+              if (!errorStatus.startsWith('5')) {
+                throw errorStatus;
+              }
+              console.log('Retrying...');
+            })
+          )
+      )
+    ).subscribe(
+      res => {        
+        if (res.status == 200)
+          this._messageService.add({ severity: 'success', summary: 'update Zone Message', detail: "update successfully" });
+        if (typeof (res?.message) == 'string')
+          this._messageService.add({ severity: 'info', summary: 'Update Zone Message', detail: res?.message });
+        else
+          this._messageService.add({ severity: 'error', summary: 'Error Message', detail: "Error" });
+        this.getZones();
+      },
+      err => {
+        this._messageService.add({ severity: 'error', summary: 'Error Message', detail: err.message });
+      }
+    )
+  }
+
+  getZone(event: any) {
+    // this._ZonesServiceProxies.get(event.id).pipe(
+    //   retryWhen(
+    //     errors =>
+    //       errors.pipe(
+    //         delay(1000),
+    //         tap(errorStatus => {
+    //           if (!errorStatus.startsWith('5'))
+    //             throw errorStatus;
+    //         })
+    //       )
+    //   )
+    // ).subscribe(
+    //   res => {
+    //     console.log(res);
+    //   },
+    //   err => console.log(err)
+    // )
   }
 }
